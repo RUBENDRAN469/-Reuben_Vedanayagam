@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Reuben Vedanayagam | From Zero Coding to DSA Hero</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #0e1323;
+    --bg-deep: #080d1d;
+    --card: #1a1f30;
+    --card-2: #161b2b;
+    --border: rgba(73, 69, 82, 0.3);
+    --text: #dee1f9;
+    --muted: #cac4d4;
+    --dim: #948e9d;
+    --violet: #a78bfa;
+    --lavender: #cebdff;
+    --soft-violet: #d0bcff;
+    --cyan: #7bd0ff;
+    --gold: #facc15;
+    --red: #ef4444;
+    --amber: #f59e0b;
+    --green: #10b981;
+    --heading: 'Space Grotesk', system-ui, sans-serif;
+    --mono: 'JetBrains Mono', ui-monospace, monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--mono);
+    font-size: 14px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  a { color: inherit; text-decoration: none; }
+  img { max-width: 100%; display: block; }
+  button, input { font: inherit; }
+
+  .container { max-width: 1280px; margin: 0 auto; padding: 0 32px; width: 100%; }
+
+  /* ===== Eyebrow pill ===== */
+  .pill {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 5px 13px; border-radius: 12px; font-size: 11px;
+    font-weight: 500; letter-spacing: 0.88px; text-transform: uppercase;
+    border: 1px solid;
+  }
+  .pill.violet { background: rgba(167,139,250,.1); border-color: rgba(167,139,250,.4); color: var(--lavender); }
+  .pill.cyan   { background: rgba(123,208,255,.1); border-color: rgba(123,208,255,.3); color: var(--cyan); }
+  .pill.lilac  { background: rgba(206,189,255,.1); border-color: rgba(206,189,255,.3); color: var(--lavender); }
+  .pill.soft   { background: rgba(208,188,255,.1); border-color: rgba(208,188,255,.3); color: var(--soft-violet); }
+  .dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; display: inline-block; }
+
+  .h1, .h2, .h3 { font-family: var(--heading); color: var(--text); font-weight: 700; }
+  .h2 { font-size: 40px; letter-spacing: -1px; line-height: 1.15; }
+  .muted { color: var(--muted); }
+
+  /* ===== Buttons ===== */
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    padding: 14px 24px; border-radius: 4px; cursor: pointer;
+    font-weight: 700; font-size: 13px; letter-spacing: .52px; text-transform: uppercase;
+    border: 1px solid transparent; transition: transform .15s, box-shadow .15s, background .15s;
+  }
+  .btn:hover { transform: translateY(-1px); }
+  .btn-primary { background: var(--violet); color: #3c1989; box-shadow: 0 0 24px rgba(167,139,250,.25); }
+  .btn-primary:hover { box-shadow: 0 0 32px rgba(167,139,250,.45); }
+  .btn-ghost { background: rgba(26,31,48,.6); border-color: rgba(123,208,255,.4); color: var(--cyan); font-weight: 500; }
+  .btn-block { width: 100%; padding: 16px; }
+
+  /* ===== Navbar ===== */
+  header.nav {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(26,31,48,.8); backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-inner { height: 64px; display: flex; align-items: center; justify-content: space-between; }
+  .brand { display: flex; align-items: center; gap: 10px; font-family: var(--heading); font-weight: 700; font-size: 17px; color: var(--text); }
+  .brand-mark {
+    width: 34px; height: 34px; border-radius: 8px;
+    background: linear-gradient(135deg, var(--violet), var(--cyan));
+    display: grid; place-items: center; color: #0e1323; font-size: 14px; font-weight: 700;
+  }
+  .nav-links { display: flex; gap: 24px; }
+  .nav-links a { color: var(--muted); font-size: 13px; font-weight: 500; letter-spacing: .52px; padding-bottom: 6px; border-bottom: 1px solid transparent; }
+  .nav-links a:hover, .nav-links a.active { color: var(--cyan); border-color: var(--cyan); }
+  .nav-cta { padding: 8px 16px; font-size: 13px; }
+  .burger { display: none; background: none; border: 0; color: var(--text); font-size: 22px; cursor: pointer; margin-left: 12px; }
+
+  /* ===== Hero ===== */
+  .hero { position: relative; padding: 64px 0 96px; overflow: hidden; }
+  .glow { position: absolute; border-radius: 50%; filter: blur(90px); pointer-events: none; z-index: 0; }
+  .glow.violet { width: 520px; height: 520px; background: rgba(167,139,250,.14); top: -120px; left: -140px; }
+  .glow.cyan { width: 420px; height: 420px; background: rgba(123,208,255,.1); bottom: -120px; right: -80px; }
+  .hero-grid { position: relative; z-index: 1; display: grid; grid-template-columns: repeat(12, minmax(0,1fr)); gap: 32px; align-items: center; }
+  .hero-left { grid-column: 1 / span 6; display: flex; flex-direction: column; gap: 16px; }
+  .hero-left h1 { font-size: 56px; line-height: 1.1; letter-spacing: -1.4px; margin-top: 8px; }
+  .grad {
+    background: linear-gradient(90deg, var(--violet), var(--soft-violet), var(--cyan));
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .hero-desc { max-width: 576px; color: var(--muted); font-size: 16px; line-height: 1.6; }
+  .cta-row { display: flex; gap: 16px; padding-top: 8px; flex-wrap: wrap; }
+  .micro { display: flex; gap: 8px; align-items: center; padding-top: 4px; color: var(--muted); font-size: 12px; }
+  .micro .check { color: var(--cyan); }
+
+  .hero-right { grid-column: 7 / span 6; position: relative; }
+  .editor {
+    background: var(--bg-deep); border: 1px solid rgba(167,139,250,.3);
+    border-radius: 8px; padding: 1px; box-shadow: 0 30px 80px rgba(0,0,0,.45);
+  }
+  .editor-bar {
+    background: #1a1f30; border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 10px 16px 11px; border-radius: 7px 7px 0 0;
+  }
+  .traffic { display: flex; gap: 8px; }
+  .traffic span { width: 12px; height: 12px; border-radius: 50%; display: block; }
+  .editor-file { color: var(--muted); font-size: 13px; }
+  .editor-lang { color: var(--cyan); font-size: 11px; font-weight: 500; letter-spacing: .88px; }
+  .editor-body { padding: 20px; font-size: 13px; line-height: 1.7; border-radius: 0 0 7px 7px; }
+  .code-line { display: grid; grid-template-columns: 28px 1fr; gap: 8px; color: rgba(222,225,249,.9); white-space: pre; }
+  .ln { color: var(--dim); text-align: right; }
+  .kw { color: var(--lavender); font-weight: 700; }
+  .fn { color: var(--cyan); font-weight: 700; }
+  .num { color: var(--soft-violet); }
+  .cm { color: var(--dim); font-style: italic; }
+  .telemetry {
+    background: rgba(22,27,43,.9); border-top: 1px solid var(--border);
+    display: flex; flex-wrap: wrap; gap: 8px; padding: 13px 12px 12px; border-radius: 0 0 7px 7px;
+  }
+  .tele-chip {
+    font-size: 11px; font-weight: 500; letter-spacing: .88px; padding: 5px 11px;
+    border-radius: 2px; border: 1px solid;
+  }
+  .tele-chip.c { background: rgba(123,208,255,.1); border-color: rgba(123,208,255,.3); color: var(--cyan); }
+  .tele-chip.v { background: rgba(206,189,255,.1); border-color: rgba(206,189,255,.3); color: var(--lavender); }
+  .tele-chip.p { background: rgba(208,188,255,.1); border-color: rgba(208,188,255,.3); color: var(--soft-violet); }
+  .progress-card {
+    position: absolute; right: -12px; bottom: -28px; width: 230px;
+    background: var(--card); border: 1px solid var(--border); border-radius: 4px; padding: 13px 12px 12px;
+    box-shadow: 0 20px 40px rgba(0,0,0,.4);
+  }
+  .progress-row { display: flex; justify-content: space-between; font-size: 11px; color: var(--cyan); font-weight: 500; margin-top: 4px; }
+  .progress-track { height: 6px; background: #2f3446; border-radius: 12px; margin-top: 8px; overflow: hidden; }
+  .progress-fill { height: 100%; width: 78%; border-radius: 12px; background: linear-gradient(90deg, var(--violet), var(--cyan)); }
+  .progress-title { color: var(--text); font-weight: 700; font-size: 11px; letter-spacing: .88px; }
+  .progress-sub { color: var(--muted); font-size: 12px; }
+  .tag {
+    position: absolute; display: inline-flex; align-items: center; gap: 6px;
+    padding: 5px 13px; border-radius: 12px; font-size: 11px; font-weight: 500; letter-spacing: .88px;
+    background: rgba(37,41,58,.9); border: 1px solid #494552; box-shadow: 0 8px 20px rgba(0,0,0,.35);
+  }
+  .tag .dot { width: 6px; height: 6px; }
+  .tag.arrays { color: var(--cyan); top: -18px; left: -18px; }
+  .tag.graphs { color: var(--soft-violet); top: 38%; left: -26px; }
+
+  /* ===== Achievements ===== */
+  .section { padding: 97px 0 96px; border-top: 1px solid var(--border); position: relative; }
+  .section-head { display: flex; flex-direction: column; gap: 12px; max-width: 768px; margin-bottom: 40px; }
+  .section-head p { color: var(--muted); font-size: 14px; }
+  .stats { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 24px; }
+  .stat {
+    background: var(--card); border: 1px solid rgba(206,189,255,.2); border-radius: 4px;
+    padding: 25px; display: flex; flex-direction: column; gap: 4px;
+  }
+  .stat-icon {
+    width: 48px; height: 48px; border-radius: 4px; display: grid; place-items: center;
+    font-size: 20px; border: 1px solid;
+  }
+  .stat-num { font-family: var(--heading); font-size: 40px; font-weight: 700; letter-spacing: -.8px; color: var(--text); padding-top: 12px; line-height: 1.1; }
+  .stat-label { color: var(--cyan); font-size: 13px; font-weight: 700; letter-spacing: .52px; }
+  .stat-rule { border-top: 1px solid rgba(73,69,82,.2); margin-top: 16px; padding-top: 17px; color: var(--muted); font-size: 12px; line-height: 1.6; }
+  .stat-badge { background: #2f3446; color: var(--soft-violet); font-size: 11px; font-weight: 700; padding: 2px 6px; border-radius: 2px; display: inline-block; margin-right: 6px; }
+  .stars { color: var(--gold); letter-spacing: 2px; font-size: 13px; }
+
+  /* ===== About / Lead ===== */
+  .about { background: rgba(22,27,43,.4); border-top: 1px solid var(--border); padding: 97px 0 96px; }
+  .about-grid { display: grid; grid-template-columns: repeat(12, minmax(0,1fr)); gap: 48px; align-items: start; }
+  .about-left { grid-column: 1 / span 6; display: flex; flex-direction: column; gap: 24px; }
+  .about-left .h2 { margin-top: 4px; }
+  .about-left > p { color: var(--muted); font-size: 16px; line-height: 1.6; }
+  .benefits { display: flex; flex-direction: column; gap: 16px; padding-top: 8px; }
+  .benefit {
+    background: var(--card); border: 1px solid rgba(73,69,82,.2); border-radius: 4px;
+    padding: 17px; display: flex; gap: 16px; align-items: flex-start;
+  }
+  .benefit-icon {
+    width: 32px; height: 32px; border-radius: 12px; flex-shrink: 0;
+    display: grid; place-items: center; font-size: 14px; border: 1px solid;
+  }
+  .benefit h3 { font-family: var(--mono); font-size: 13px; font-weight: 700; letter-spacing: .52px; color: var(--text); }
+  .benefit p { color: var(--muted); font-size: 12px; line-height: 1.6; margin-top: 4px; }
+
+  .lead-card {
+    grid-column: 7 / span 6; background: var(--card);
+    border: 1px solid rgba(167,139,250,.3); border-radius: 8px; padding: 33px;
+    display: flex; flex-direction: column; gap: 24px; box-shadow: 0 30px 70px rgba(0,0,0,.35);
+  }
+  .lead-head { display: flex; flex-direction: column; gap: 8px; border-bottom: 1px solid rgba(73,69,82,.3); padding-bottom: 17px; }
+  .lead-title-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+  .lead-title { font-family: var(--heading); font-size: 20px; font-weight: 700; color: var(--text); }
+  .lead-form { display: flex; flex-direction: column; gap: 16px; }
+  .field { display: flex; flex-direction: column; gap: 6px; }
+  .field label { color: var(--muted); font-size: 13px; font-weight: 500; letter-spacing: .52px; }
+  .field input {
+    background: var(--bg-deep); border: 1px solid rgba(73,69,82,.4); border-radius: 2px;
+    padding: 13px 14px; color: var(--text); font-size: 14px; width: 100%; outline: none;
+    transition: border-color .15s, box-shadow .15s;
+  }
+  .field input::placeholder { color: var(--dim); }
+  .field input:focus { border-color: var(--violet); box-shadow: 0 0 0 3px rgba(167,139,250,.15); }
+  .lead-form .btn { margin-top: 4px; }
+  .lead-note { color: var(--muted); font-size: 12px; display: flex; gap: 6px; align-items: center; }
+  .form-status { font-size: 13px; min-height: 18px; }
+  .form-status.ok { color: var(--cyan); }
+  .form-status.err { color: #fca5a5; }
+  .btn[disabled] { opacity: .6; cursor: wait; transform: none; }
+
+  /* ===== ₹1 Trial ===== */
+  .trial { border-top: 1px solid var(--border); padding: 97px 160px 96px; position: relative; }
+  .trial-glow { position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); width: 900px; height: 500px; background: radial-gradient(closest-side, rgba(167,139,250,.18), transparent); pointer-events: none; }
+  .trial-card {
+    position: relative; background: var(--card); border: 1px solid rgba(167,139,250,.4);
+    border-radius: 16px; padding: 50px; display: flex; flex-direction: column; gap: 24px;
+    box-shadow: 0 40px 100px rgba(0,0,0,.45);
+  }
+  .trial-head { display: flex; flex-direction: column; gap: 8px; border-bottom: 1px solid rgba(73,69,82,.3); padding-bottom: 33px; }
+  .trial-head .h2 { margin-top: 8px; }
+  .trial-main { display: flex; gap: 40px; align-items: stretch; flex-wrap: wrap; }
+  .price {
+    background: var(--bg-deep); border: 1px solid rgba(123,208,255,.3); border-radius: 8px;
+    min-width: 170px; height: 145px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; padding: 14px 20px;
+  }
+  .price-big { font-family: var(--heading); font-size: 56px; font-weight: 700; color: var(--cyan); letter-spacing: -1.68px; line-height: 1; }
+  .price-meta { display: flex; gap: 10px; align-items: center; font-size: 11px; color: var(--dim); }
+  .price-meta s { color: var(--dim); }
+  .price-meta .off { color: var(--soft-violet); font-weight: 700; }
+  .trial-desc { flex: 1; min-width: 280px; display: flex; flex-direction: column; justify-content: center; gap: 0; color: var(--muted); font-size: 16px; line-height: 1.6; }
+  .checks { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 16px; padding: 8px 0; }
+  .check-item {
+    background: rgba(8,13,29,.8); border: 1px solid rgba(73,69,82,.2); border-radius: 4px;
+    padding: 15px; display: flex; gap: 12px; align-items: center; min-height: 58px; color: var(--text); font-weight: 500; font-size: 14px;
+  }
+  .check-item.wide { grid-column: 1 / span 2; }
+  .check-item .tick { color: var(--cyan); font-weight: 700; }
+  .convert { border-top: 1px solid rgba(73,69,82,.3); padding-top: 33px; display: flex; flex-direction: column; align-items: center; gap: 16px; text-align: center; }
+  .convert p { color: var(--text); font-weight: 700; font-size: 14px; line-height: 1.6; max-width: 620px; }
+  .convert .btn { width: 100%; max-width: 420px; padding: 16px; font-size: 13px; line-height: 1.2; text-align: center; }
+  .convert small { color: var(--muted); font-size: 12px; display: flex; gap: 4px; align-items: center; }
+
+  /* ===== Reviews ===== */
+  .reviews { padding: 97px 0 96px; border-top: 1px solid var(--border); }
+  .review-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 24px; align-items: stretch; }
+  .review {
+    background: var(--card); border: 1px solid rgba(73,69,82,.3); border-radius: 8px;
+    padding: 25px; display: flex; flex-direction: column; gap: 16px;
+  }
+  .review .stars { font-size: 13px; }
+  .review blockquote { font-family: var(--mono); font-style: italic; color: var(--text); font-size: 14px; line-height: 1.6; }
+  .review-foot { margin-top: auto; padding-top: 24px; border-top: 1px solid rgba(73,69,82,.2); display: flex; align-items: center; gap: 12px; }
+  .avatar {
+    width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center;
+    font-weight: 700; font-size: 16px; border: 1px solid; flex-shrink: 0;
+  }
+  .review-name { font-weight: 700; color: var(--text); font-size: 13px; letter-spacing: .52px; }
+  .review-col { font-size: 12px; color: var(--muted); }
+  .verified {
+    display: inline-block; margin-top: 2px; padding: 3px 9px; border-radius: 2px;
+    background: rgba(123,208,255,.1); border: 1px solid rgba(123,208,255,.2);
+    color: var(--cyan); font-size: 11px; font-weight: 500; letter-spacing: .88px;
+  }
+
+  /* ===== FAQ ===== */
+  .faq { background: rgba(22,27,43,.3); border-top: 1px solid var(--border); padding: 97px 0 96px; }
+  .faq-wrap { max-width: 896px; margin: 0 auto; padding: 0 32px; display: flex; flex-direction: column; gap: 40px; }
+  .faq-head { display: flex; flex-direction: column; gap: 12px; }
+  .faq-head p { color: var(--muted); font-size: 14px; }
+  .faq-list { display: flex; flex-direction: column; gap: 12px; }
+  .faq-item { background: var(--card); border: 1px solid rgba(73,69,82,.3); border-radius: 4px; overflow: hidden; }
+  .faq-q {
+    width: 100%; background: none; border: 0; color: var(--text); cursor: pointer;
+    padding: 20px; display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    font-family: var(--heading); font-weight: 500; font-size: 18px; text-align: left;
+  }
+  .faq-q .chev { color: var(--cyan); transition: transform .2s; font-size: 14px; flex-shrink: 0; }
+  .faq-item.open .chev { transform: rotate(180deg); }
+  .faq-a { display: none; padding: 0 20px 20px; color: var(--muted); font-size: 14px; line-height: 1.7; }
+  .faq-item.open .faq-a { display: block; }
+
+  /* ===== Footer ===== */
+  footer { background: var(--bg-deep); border-top: 1px solid rgba(73,69,82,.3); }
+  .foot-pad { padding: 64px 32px; display: flex; flex-direction: column; gap: 40px; }
+  .foot-grid { display: grid; grid-template-columns: repeat(12, minmax(0,1fr)); gap: 40px; }
+  .foot-brand { grid-column: 1 / span 5; display: flex; flex-direction: column; gap: 16px; padding-bottom: 36px; }
+  .foot-brand .tagline { color: var(--cyan); font-weight: 700; font-size: 13px; letter-spacing: .52px; }
+  .foot-brand .blurb { color: var(--muted); font-size: 12px; line-height: 1.6; max-width: 384px; }
+  .foot-col { display: flex; flex-direction: column; gap: 12px; }
+  .foot-col.quick { grid-column: 6 / span 3; }
+  .foot-col.contact { grid-column: 9 / span 4; }
+  .foot-col h4 { color: var(--text); font-size: 13px; font-weight: 700; letter-spacing: .65px; text-transform: uppercase; }
+  .foot-col a, .foot-col span.item { color: var(--muted); font-size: 11px; font-weight: 500; letter-spacing: .88px; }
+  .foot-col a:hover { color: var(--cyan); }
+  .foot-col .contact-line { color: var(--muted); font-size: 12px; }
+  .foot-col .contact-line b { color: var(--text); font-weight: 400; }
+  .foot-mid {
+    border-top: 1px solid rgba(73,69,82,.2); padding-top: 25px;
+    display: flex; flex-wrap: wrap; gap: 8px 24px; align-items: center;
+  }
+  .foot-mid a { color: var(--muted); font-size: 11px; font-weight: 500; letter-spacing: .88px; }
+  .status { display: inline-flex; align-items: center; gap: 6px; color: var(--cyan); font-size: 11px; font-weight: 500; letter-spacing: .88px; margin-left: auto; }
+  .foot-bottom {
+    border-top: 1px solid rgba(73,69,82,.2); padding-top: 25px;
+    display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap;
+    color: var(--muted); font-size: 12px;
+  }
+  .foot-bottom .copy { color: var(--dim); }
+
+  /* ===== Toast ===== */
+  .toast {
+    position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%) translateY(120px);
+    background: var(--card); border: 1px solid rgba(123,208,255,.4); color: var(--text);
+    padding: 14px 20px; border-radius: 6px; font-size: 13px; box-shadow: 0 16px 40px rgba(0,0,0,.5);
+    transition: transform .3s ease; z-index: 100; max-width: calc(100% - 32px);
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+
+  /* ===== Responsive ===== */
+  @media (max-width: 1100px) {
+    .trial { padding: 97px 48px 96px; }
+    .stats { grid-template-columns: repeat(2, minmax(0,1fr)); }
+  }
+  @media (max-width: 960px) {
+    .nav-links, .nav-cta { display: none; }
+    .burger { display: block; }
+    .nav-links.open {
+      display: flex; flex-direction: column; position: absolute; top: 64px; left: 0; right: 0;
+      background: var(--card); padding: 20px 32px; border-bottom: 1px solid var(--border); gap: 16px;
+    }
+    .hero-left, .hero-right, .about-left, .lead-card, .foot-brand, .foot-col.quick, .foot-col.contact {
+      grid-column: 1 / -1;
+    }
+    .hero-left h1 { font-size: 44px; }
+    .hero-right { margin-top: 24px; }
+    .progress-card { position: relative; right: auto; bottom: auto; margin-top: 16px; width: 100%; }
+    .tag.arrays { left: 8px; top: -14px; }
+    .tag.graphs { left: auto; right: 8px; top: auto; bottom: 120px; }
+    .review-grid { grid-template-columns: 1fr; }
+    .h2 { font-size: 32px; }
+    .trial { padding: 80px 24px; }
+    .trial-card { padding: 28px; }
+    .faq-q { font-size: 16px; }
+  }
+  @media (max-width: 640px) {
+    .container, .faq-wrap, .foot-pad { padding-left: 20px; padding-right: 20px; }
+    .hero { padding: 40px 0 72px; }
+    .hero-left h1 { font-size: 36px; letter-spacing: -1px; }
+    .stats { grid-template-columns: 1fr; }
+    .stat-num { font-size: 34px; }
+    .checks { grid-template-columns: 1fr; }
+    .check-item.wide { grid-column: auto; }
+    .lead-card { padding: 22px; }
+    .lead-title { font-size: 18px; }
+    .price-big { font-size: 44px; }
+    .foot-grid { grid-template-columns: 1fr; }
+    .foot-col.quick, .foot-col.contact, .foot-brand { grid-column: 1 / -1; }
+    .status { margin-left: 0; }
+    .foot-bottom { flex-direction: column; align-items: flex-start; }
+    .editor-body { font-size: 11px; padding: 14px; }
+    .cta-row .btn { width: 100%; }
+    .section, .about, .reviews, .faq { padding: 72px 0; }
+    .trial { padding: 72px 20px; }
+    .h2 { font-size: 28px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== HEADER / TOP NAVBAR ===== -->
+<header class="nav" id="top">
+  <div class="container nav-inner">
+    <a href="#top" class="brand">
+      <span class="brand-mark">RV</span>
+      <span>Reuben Vedanayagam</span>
+    </a>
+    <nav class="nav-links" id="navLinks">
+      <a href="#about" class="active">About</a>
+      <a href="#achievements">Achievements</a>
+      <a href="#reviews">Reviews</a>
+      <a href="#faqs">FAQs</a>
+    </nav>
+    <div style="display:flex;align-items:center;">
+      <a href="#trial" class="btn btn-primary nav-cta">Book ₹1 Trial</a>
+      <button class="burger" id="burger" aria-label="Open menu">☰</button>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<!-- ===== SECTION 2. HERO ===== -->
+<section class="hero">
+  <div class="glow violet"></div>
+  <div class="glow cyan"></div>
+  <div class="container hero-grid">
+    <div class="hero-left">
+      <span class="pill violet">YOUR DSA JOURNEY STARTS HERE 🚀</span>
+      <h1 class="h1">
+        From Zero Coding<br />
+        Knowledge to <span class="grad">DSA</span><br />
+        <span class="grad">Hero</span>.
+      </h1>
+      <p class="hero-desc">
+        Build confidence. Master Data Structures and Algorithms through hands-on practice, personalized mentorship, and continuous progress tracking.
+      </p>
+      <div class="cta-row">
+        <a href="#about" class="btn btn-primary">Start Your Learning Journey</a>
+        <a href="#trial" class="btn btn-ghost">Explore Free Demo</a>
+      </div>
+      <div class="micro">
+        <span class="check">✓</span>
+        <span>No experience required. Just bring your curiosity and willingness to learn.</span>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <span class="tag arrays"><span class="dot" style="background:var(--cyan)"></span>Arrays</span>
+      <span class="tag graphs"><span class="dot" style="background:var(--soft-violet)"></span>Graphs</span>
+
+      <div class="editor">
+        <div class="editor-bar">
+          <div class="traffic">
+            <span style="background:var(--red)"></span>
+            <span style="background:var(--amber)"></span>
+            <span style="background:var(--green)"></span>
+          </div>
+          <div class="editor-file">src/algorithms/TwoSum_Optimized.py</div>
+          <div class="editor-lang">Python 3.11</div>
+        </div>
+        <div class="editor-body">
+          <div class="code-line"><span class="ln">01</span><span class="cm"># Two Pointer Optimal Solution - O(N) Time, O(1) Space</span></div>
+          <div class="code-line"><span class="ln">02</span><span><span class="kw">def</span> <span class="fn">two_sum_sorted</span>(nums, target):</span></div>
+          <div class="code-line"><span class="ln">03</span><span>    left, right = <span class="num">0</span>, <span class="fn">len</span>(nums) - <span class="num">1</span></span></div>
+          <div class="code-line"><span class="ln">04</span><span>    <span class="kw">while</span> left &lt; right:</span></div>
+          <div class="code-line"><span class="ln">05</span><span>        total = nums[left] + nums[right]</span></div>
+          <div class="code-line"><span class="ln">06</span><span>        <span class="kw">if</span> total == target:</span></div>
+          <div class="code-line"><span class="ln">07</span><span>            <span class="kw">return</span> [left + <span class="num">1</span>, right + <span class="num">1</span>]  <span class="cm"># 1-indexed</span></span></div>
+          <div class="code-line"><span class="ln">08</span><span>        <span class="kw">elif</span> total &lt; target:</span></div>
+          <div class="code-line"><span class="ln">09</span><span>            left += <span class="num">1</span></span></div>
+          <div class="code-line"><span class="ln">10</span><span>        <span class="kw">else</span>:</span></div>
+          <div class="code-line"><span class="ln">11</span><span>            right -= <span class="num">1</span></span></div>
+          <div class="code-line"><span class="ln">12</span><span>    <span class="kw">return</span> []</span></div>
+        </div>
+        <div class="telemetry">
+          <span class="tele-chip c">Runtime: 2ms (Beats 99.4%)</span>
+          <span class="tele-chip v">Space: O(1)</span>
+          <span class="tele-chip p">Binary Search Mastered 🏆</span>
+        </div>
+      </div>
+
+      <div class="progress-card">
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <span class="progress-title">Completed</span>
+          <span class="progress-row" style="margin:0">78%</span>
+        </div>
+        <div class="progress-track"><div class="progress-fill"></div></div>
+        <div class="progress-sub" style="margin-top:8px;">Sprint milestone on track</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SECTION 3. ACHIEVEMENTS ===== -->
+<section class="section" id="achievements">
+  <div class="container">
+    <div class="section-head">
+      <span class="pill lilac">PROVEN OUTCOMES</span>
+      <h2 class="h2">Small Steps. Real Progress. Big Achievements.</h2>
+      <p>Every problem solved is a step forward. Every mistake is an opportunity to improve. We focus on helping students build real coding skills through consistent practice and personalized guidance.</p>
+    </div>
+
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-icon" style="background:rgba(167,139,250,.2);border-color:rgba(167,139,250,.4);color:var(--violet)">👥</div>
+        <div class="stat-num">5,000+</div>
+        <div class="stat-label">Students Mentored</div>
+        <div class="stat-rule">From absolute beginners to confident coders across top engineering campuses.</div>
+      </div>
+      <div class="stat">
+        <div class="stat-icon" style="background:rgba(123,208,255,.2);border-color:rgba(123,208,255,.4);color:var(--cyan)">⌨</div>
+        <div class="stat-num">120,000+</div>
+        <div class="stat-label">Coding Problems Practiced</div>
+        <div class="stat-rule"><span class="stat-badge">450+</span>curated Pattern Sheets</div>
+      </div>
+      <div class="stat">
+        <div class="stat-icon" style="background:rgba(208,188,255,.2);border-color:rgba(208,188,255,.4);color:var(--soft-violet)">🎓</div>
+        <div class="stat-num">8,500+</div>
+        <div class="stat-label">Learning Sessions Completed</div>
+        <div class="stat-rule">Direct 1-on-1 mentorship calls, doubt clearing.</div>
+      </div>
+      <div class="stat">
+        <div class="stat-icon" style="background:rgba(167,139,250,.2);border-color:rgba(167,139,250,.4);color:var(--violet)">★</div>
+        <div class="stat-num">98.4%</div>
+        <div class="stat-label">Student Satisfaction</div>
+        <div class="stat-rule"><span class="stars">★★★★★</span><br /><span style="color:var(--text);font-size:13px;">4.9/5 Average Rating</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SECTION 4. ABOUT / LEAD GENERATION ===== -->
+<section class="about" id="about">
+  <div class="container about-grid">
+    <div class="about-left">
+      <span class="pill cyan">CUSTOMIZED ROADMAP</span>
+      <h2 class="h2">Ready to Level Up Your Coding Skills?</h2>
+      <p>Tailored to your current level and learning goals.</p>
+
+      <div class="benefits">
+        <div class="benefit">
+          <div class="benefit-icon" style="background:rgba(167,139,250,.2);border-color:rgba(167,139,250,.4);color:var(--violet)">✎</div>
+          <div>
+            <h3>Beginner-friendly guidance.</h3>
+            <p>Zero prior coding required. Patient, foundational coaching from syntax to logical thinking.</p>
+          </div>
+        </div>
+        <div class="benefit">
+          <div class="benefit-icon" style="background:rgba(123,208,255,.2);border-color:rgba(123,208,255,.4);color:var(--cyan)">◎</div>
+          <div>
+            <h3>Personalized learning approach.</h3>
+            <p>Tailored problem sets calibrated directly to your current pace, university schedule, and goals.</p>
+          </div>
+        </div>
+        <div class="benefit">
+          <div class="benefit-icon" style="background:rgba(208,188,255,.2);border-color:rgba(208,188,255,.4);color:var(--soft-violet)">↗</div>
+          <div>
+            <h3>Continuous progress tracking.</h3>
+            <p>Weekly 1-on-1 reviews, code efficiency audits, and real-time doubt clearing with top mentors.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Lead capture card: fields trimmed to name / email / phone -->
+    <div class="lead-card">
+      <div class="lead-head">
+        <div class="lead-title-row">
+          <span class="lead-title">Diagnostic Profile Intake</span>
+          <span class="pill cyan" style="font-size:10px;padding:3px 9px;border-radius:2px;">Active Sprint</span>
+        </div>
+      </div>
+
+      <form class="lead-form" id="leadForm" novalidate>
+        <div class="field">
+          <label for="name">Full Name</label>
+          <input id="name" name="name" type="text" placeholder="Alan Turing" autocomplete="name" required />
+        </div>
+        <div class="field">
+          <label for="email">Email Address</label>
+          <input id="email" name="email" type="email" placeholder="alan@university.edu" autocomplete="email" required />
+        </div>
+        <div class="field">
+          <label for="phone">Mobile Number</label>
+          <input id="phone" name="phone" type="tel" placeholder="+91 98765 43210" autocomplete="tel" required />
+        </div>
+
+        <button type="submit" class="btn btn-primary" id="submitBtn">Get Started Now →</button>
+        <div class="form-status" id="formStatus"></div>
+        <div class="lead-note"><span style="color:var(--cyan)">🔒</span> Your data is completely safe. No spam, only personalized guidance.</div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SECTION 5. ₹1 TRIAL SESSION CENTERPIECE ===== -->
+<section class="trial" id="trial">
+  <div class="trial-glow"></div>
+  <div class="trial-card" style="max-width:1100px;margin:0 auto;position:relative;">
+    <div class="trial-head">
+      <span class="pill violet" style="align-self:flex-start;letter-spacing:1.1px;">EXPERIENCE BEFORE YOU COMMIT</span>
+      <h2 class="h2" style="font-size:40px;">Your First Step Towards DSA Mastery for Just ₹1!</h2>
+    </div>
+
+    <div class="trial-main">
+      <div class="price">
+        <div class="price-big">₹1</div>
+        <div class="price-meta"><s>Regular ₹999</s> <span class="off">99.9% OFF</span></div>
+      </div>
+      <div class="trial-desc">
+        <p>Wondering whether DSA is right for you? Experience the learning process yourself!</p>
+        <p style="margin-top:8px;">Join our introductory demo session and discover how we make complex DSA concepts easier to understand through practical examples and guided problem-solving.</p>
+      </div>
+    </div>
+
+    <div class="checks">
+      <div class="check-item"><span class="tick">✓</span>Understand DSA fundamentals.</div>
+      <div class="check-item"><span class="tick">✓</span>Experience practical teaching.</div>
+      <div class="check-item"><span class="tick">✓</span>Explore coding problem-solving.</div>
+      <div class="check-item"><span class="tick">✓</span>Get a personalized learning roadmap.</div>
+      <div class="check-item wide"><span class="tick">✓</span>Clear your doubts directly with the mentor.</div>
+    </div>
+
+    <div class="convert">
+      <p>One small investment. One valuable learning experience. A great place to begin.</p>
+      <a class="btn btn-primary" href="https://payments.cashfree.com/forms/getaudit" target="_blank" rel="noopener">BOOK MY ₹1 TRIAL<br />SESSION</a>
+      <small><span style="color:var(--cyan)">🔒</span> Secure payment</small>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SECTION 6. REVIEWS ===== -->
+<section class="reviews" id="reviews">
+  <div class="container">
+    <div class="section-head">
+      <span class="pill lilac">STUDENT EXPERIENCES</span>
+      <h2 class="h2">Their Journey. Their Growth. Their Words.</h2>
+      <p>Hear directly from students about their experience, progress, and journey with us.</p>
+    </div>
+
+    <div class="review-grid">
+      <article class="review">
+        <div class="stars">★★★★★</div>
+        <span class="verified">Verified Learner</span>
+        <blockquote>"I used to feel confused whenever I faced a coding problem. The practical explanations and regular practice helped me understand how to approach problems step by step."</blockquote>
+        <div class="review-foot">
+          <div class="avatar" style="background:rgba(167,139,250,.2);border-color:var(--lavender);color:var(--lavender)">RK</div>
+          <div>
+            <div class="review-name">Rohan Kumar</div>
+            <div class="review-col">Delhi Technological University (DTU)</div>
+          </div>
+        </div>
+      </article>
+
+      <article class="review">
+        <div class="stars">★★★★★</div>
+        <span class="verified">Verified Learner</span>
+        <blockquote>"What I liked most was the individual attention and continuous monitoring. I wasn't just attending classes; I was actually learning to solve problems independently."</blockquote>
+        <div class="review-foot">
+          <div class="avatar" style="background:rgba(123,208,255,.2);border-color:var(--cyan);color:var(--cyan)">AP</div>
+          <div>
+            <div class="review-name">Ananya Patel</div>
+            <div class="review-col">Vellore Institute of Technology (VIT)</div>
+          </div>
+        </div>
+      </article>
+
+      <article class="review">
+        <div class="stars">★★★★★</div>
+        <span class="verified">Verified Learner</span>
+        <blockquote>"DSA felt difficult when I started. But with consistent practice and proper guidance, I slowly started gaining confidence."</blockquote>
+        <div class="review-foot">
+          <div class="avatar" style="background:rgba(208,188,255,.2);border-color:var(--soft-violet);color:var(--soft-violet)">SS</div>
+          <div>
+            <div class="review-name">Siddharth Sharma</div>
+            <div class="review-col">Thapar University (TIET)</div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SECTION 7. FAQ ===== -->
+<section class="faq" id="faqs">
+  <div class="faq-wrap">
+    <div class="faq-head">
+      <span class="pill lilac" style="align-self:flex-start;">FAQ</span>
+      <h2 class="h2">Everything You Need to Know Before You Begin.</h2>
+      <p>Clear answers designed to address common questions for beginners and aspiring software engineers.</p>
+    </div>
+
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">Can I learn DSA if I am a complete beginner?<span class="chev">▼</span></button>
+        <div class="faq-a">Yes. The program starts from the fundamentals of programming and builds up step by step, so no prior coding experience is needed.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">Which programming language will be used?<span class="chev">▼</span></button>
+        <div class="faq-a">The sessions use Python, which keeps the focus on problem-solving logic rather than syntax.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">How will my progress be monitored?<span class="chev">▼</span></button>
+        <div class="faq-a">You get weekly 1-on-1 reviews, code efficiency audits, and a progress tracker that shows how you are doing across topics.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">Will I get practical coding experience?<span class="chev">▼</span></button>
+        <div class="faq-a">Yes. Every topic comes with hands-on problems, guided solving, and practice sheets you can work through on your own.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">How much time should I spend practicing daily?<span class="chev">▼</span></button>
+        <div class="faq-a">A consistent daily practice session works best. Your mentor will help you set a schedule that fits your university timetable.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">Is there a demo class available?<span class="chev">▼</span></button>
+        <div class="faq-a">Yes. You can book the ₹1 trial session above to experience how the classes work before you commit.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">Will this training help me prepare for technical interviews?<span class="chev">▼</span></button>
+        <div class="faq-a">Yes. The training covers the data structures and algorithm patterns that are commonly tested in technical interviews.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">How can I enroll?<span class="chev">▼</span></button>
+        <div class="faq-a">Start with the ₹1 trial session or fill in the intake form above. We will reach out to plan your next steps.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="container foot-pad">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a href="#top" class="brand"><span class="brand-mark">RV</span><span>Reuben Vedanayagam</span></a>
+        <div class="tagline">Learn. Practice. Improve. Repeat.</div>
+        <div class="blurb">Helping students transform their coding skills through practical DSA training, personalized mentorship, and consistent problem-solving.</div>
+      </div>
+
+      <div class="foot-col quick">
+        <h4>Quick Links</h4>
+        <a href="#about">About</a>
+        <a href="#achievements">Achievements</a>
+        <a href="#reviews">Reviews</a>
+        <a href="#faqs">FAQs</a>
+        <a href="mailto:support@reubenvedanayagam.dev">Contact Us</a>
+      </div>
+
+      <div class="foot-col contact">
+        <h4>Contact &amp; Connect</h4>
+        <div class="contact-line">Email: <b>support@reubenvedanayagam.dev</b></div>
+        <div class="contact-line">Phone: <b>+91 800-REUBEN-V</b></div>
+        <div class="contact-line">Instagram: <a href="#" style="font-size:12px;letter-spacing:.12px;text-transform:none;">@reuben.vedanayagam</a></div>
+        <div class="contact-line">LinkedIn: <a href="#" style="font-size:12px;letter-spacing:.12px;text-transform:none;">reuben-vedanayagam</a></div>
+      </div>
+    </div>
+
+    <div class="foot-mid">
+      <a href="#about">Telemetry Metrics</a>
+      <a href="#faqs">Privacy Syntax</a>
+      <a href="#faqs">Terms of Kernel</a>
+      <span class="status"><span class="dot"></span>Status: Operational</span>
+    </div>
+
+    <div class="foot-bottom">
+      <span>Your journey from zero to hero starts with one problem. Let's solve it together.</span>
+      <span class="copy">© 2026 Reuben Vedanayagam. All Rights Reserved.</span>
+    </div>
+  </div>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  // ===== Apps Script endpoint (deployed Web app URL) =====
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxSL9UeUodahCNh7GnrXqEZ-7ng95ne4j7jj1KXAbxchiGkd7_WghQ1ZDEqU9_nrEftmg/exec";
+
+  const form = document.getElementById("leadForm");
+  const submitBtn = document.getElementById("submitBtn");
+  const statusEl = document.getElementById("formStatus");
+  const toast = document.getElementById("toast");
+
+  function showSuccess() {
+    submitBtn.disabled = false;
+    submitBtn.textContent = "Get Started Now →";
+    statusEl.className = "form-status ok";
+    statusEl.textContent = "Thanks! Your intake is saved. We'll be in touch soon.";
+    form.reset();
+    showToast("Details received ✓");
+  }
+
+  function showError() {
+    submitBtn.disabled = false;
+    submitBtn.textContent = "Get Started Now →";
+    statusEl.className = "form-status err";
+    statusEl.textContent = "Something went wrong. Please try again.";
+  }
+
+  function showToast(msg) {
+    toast.textContent = msg;
+    toast.classList.add("show");
+    setTimeout(() => toast.classList.remove("show"), 2800);
+  }
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const name = document.getElementById("name").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const phone = document.getElementById("phone").value.trim();
+
+    if (!name || !email || !phone) {
+      statusEl.className = "form-status err";
+      statusEl.textContent = "Please fill in name, email and phone.";
+      return;
+    }
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Submitting...";
+    statusEl.textContent = "";
+
+    const url = SCRIPT_URL + "?" + new URLSearchParams({ name, email, phone });
+
+    fetch(url, { method: "GET", mode: "no-cors" })
+      .then(() => showSuccess())
+      .catch(() => showError());
+  });
+
+  // Mobile menu
+  const burger = document.getElementById("burger");
+  const navLinks = document.getElementById("navLinks");
+  burger.addEventListener("click", () => navLinks.classList.toggle("open"));
+  navLinks.querySelectorAll("a").forEach(a => a.addEventListener("click", () => navLinks.classList.remove("open")));
+
+  // FAQ accordion
+  document.querySelectorAll(".faq-item").forEach(item => {
+    const btn = item.querySelector(".faq-q");
+    btn.addEventListener("click", () => {
+      const open = item.classList.toggle("open");
+      btn.setAttribute("aria-expanded", open ? "true" : "false");
+    });
+  });
+</script>
+</body>
+</html>
